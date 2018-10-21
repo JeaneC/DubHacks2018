@@ -97,7 +97,7 @@ class People1 extends Component {
             display: 'flex'
           }}
         >
-          <Text style={styles.header}>Was anyone else present?</Text>
+          <Text style={styles.header}>{this.props.header1}</Text>
 
           <View
             style={{
@@ -147,7 +147,21 @@ class People1 extends Component {
 }
 
 const mapStateToProps = state => {
-  return {};
+  const { language } = state.main;
+  let header1 = 'Was anyone else present?';
+  if (language == 1) {
+    console.log('¿Alguien más estaba presente?');
+  } else if (language == 2) {
+    console.log('Speaking Spanish');
+    header1 = '¿Puedes describir lo que te pasó?';
+  } else if (language == 3) {
+    console.log('Speaking French');
+    header1 = "Quelqu'un d'autre était-il présent?";
+  }
+  return {
+    language,
+    header1
+  };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {

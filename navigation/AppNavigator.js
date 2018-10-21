@@ -21,18 +21,27 @@ import Report1 from './Questions/Report1';
 import Name from './Questions/Name';
 import Settings from './Settings';
 import Languages from './Language';
+import PastReports from './PastEntries';
+import Derek from './Derek';
+import ReportTo from './ReportTo';
+import WalkingHome from './WalkingHome';
 
 // Read https://reactnavigation.org/docs/en/auth-flow.html for a better auth flow
 // We will only create a sign-in screen for demonstration
 
 const SwitchNav = createSwitchNavigator({
-  Settings: Settings,
   DubHome: DubHome,
+  WalkingHome: WalkingHome,
+  Derek: Derek,
+  PastReports: PastReports,
+  Settings: Settings,
   Languages: Languages,
   Where1: Where1,
   When2: When2,
   When1: When1,
   Name: Name,
+  ReportTo,
+  ReportTo,
   Report1: Report1,
   Contact1: Contact1,
   People1: People1,

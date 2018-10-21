@@ -10,6 +10,8 @@ import { createStackNavigator } from 'react-navigation';
 
 import { LinearGradient } from 'expo';
 
+import { connect } from 'react-redux';
+
 import ActionItem from '../../components/ActionItem';
 import BotRight from '../../assets/BotRight.png';
 
@@ -94,14 +96,14 @@ class Where1 extends Component {
             display: 'flex'
           }}
         >
-          <Text style={styles.header}>Do you want to report this now?</Text>
+          <Text style={styles.header}>{this.props.header1}</Text>
 
           <ActionItem
-            note="Yes"
+            note={this.props.header2}
             move={() => this.props.navigation.navigate('Name')}
           />
           <ActionItem
-            note="No"
+            note={this.props.header3}
             move={() => this.props.navigation.navigate('Name')}
           />
         </ScrollView>
@@ -110,4 +112,33 @@ class Where1 extends Component {
   }
 }
 
-export default Where1;
+const mapStateToProps = state => {
+  const { language } = state.main;
+  let header1 = 'Do you want to report this now? ';
+
+  let header2 = 'Yes';
+  let header3 = 'No';
+
+  if (language == 1) {
+    console.log('¿Alguien más estaba presente?');
+  } else if (language == 2) {
+    console.log('Speaking Spanish');
+    header1 = '¿Quieres reportar esto ahora?';
+    header2 = 'Si';
+    header3 = 'No';
+  } else if (language == 3) {
+    console.log('Speaking French');
+    header1 = 'Voulez-vous signaler ceci maintenant?';
+    header2 = 'Oui';
+    header3 = 'Non';
+  }
+
+  return {
+    language,
+    header1,
+    header2,
+    header3
+  };
+};
+
+export default connect(mapStateToProps)(Where1);

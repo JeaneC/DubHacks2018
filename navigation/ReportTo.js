@@ -3,16 +3,15 @@ import { ScrollView, View, Text, Image, TouchableOpacity } from 'react-native';
 import { Container, Header, Textarea } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
-import Back from '../../assets/homeIcons/Back.png';
-import GoNextIcon from '../../assets/GoNextIcon.png';
+import Back from '../assets/homeIcons/Back.png';
+import GoNextIcon from '../assets/GoNextIcon.png';
 
 import { createStackNavigator } from 'react-navigation';
 
 import { LinearGradient } from 'expo';
 
-import ActionItem from '../../components/ActionItem';
-import BotRight from '../../assets/BotRight.png';
-import { connect } from 'react-redux';
+import ActionItem from '../components/ActionItem';
+import BotRight from '../assets/BotRight.png';
 
 const styles = {
   container: {
@@ -65,7 +64,7 @@ const styles = {
   }
 };
 
-class Where1 extends Component {
+class ReportTo extends Component {
   static navigationOptions = {};
 
   state = {
@@ -78,14 +77,17 @@ class Where1 extends Component {
     });
   };
 
-  moveOn = () => {
-    this.props.navigation.navigate('Where2');
+  moveOn = val => {
+    this.props.navigation.navigate('DubHome');
+    // if (val == 2) {
+    //   this.props.navigation.navigate('Derek');
+    // }
   };
   render() {
     return (
       <View style={styles.container}>
         <LinearGradient
-          colors={['#5D8CFD', '#ED8DFE']}
+          colors={['#FF6363', '#E966FE']}
           style={styles.gradientContainer}
         />
         <ScrollView
@@ -95,15 +97,29 @@ class Where1 extends Component {
             display: 'flex'
           }}
         >
-          <Text style={styles.header}>{this.props.header1}</Text>
+          <TouchableOpacity
+            style={{
+              marginTop: 20,
+              alignSelf: 'flex-start',
+              padding: 20
+            }}
+            onPress={() => this.props.navigation.navigate('PastReports')}
+          >
+            <Image source={Back} />
+          </TouchableOpacity>
+          <Text style={styles.header}>Who would you like to report to?</Text>
 
           <ActionItem
-            note={this.props.header2}
-            move={() => this.props.navigation.navigate('When2')}
+            note="Seattle Police Department"
+            move={() => this.moveOn(1)}
           />
           <ActionItem
-            note={this.props.header3}
-            move={() => this.props.navigation.navigate('When2')}
+            note="National Sexual Assault Hotline"
+            move={() => this.moveOn(2)}
+          />
+          <ActionItem
+            note="Sheperd's Counseling Center"
+            move={() => this.moveOn(3)}
           />
         </ScrollView>
       </View>
@@ -111,32 +127,4 @@ class Where1 extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  const { language } = state.main;
-  let header1 = 'Do you remember when this happened?';
-  let header2 = 'Yes';
-  let header3 = 'No';
-
-  if (language == 1) {
-    console.log('English');
-  } else if (language == 2) {
-    console.log('Speaking Spanish');
-    header1 = '¿Recuerdas cuando sucedió esto?';
-    header2 = 'Si';
-    header3 = 'No';
-  } else if (language == 3) {
-    console.log('Speaking French');
-    header1 = "Vous souvenez-vous quand c'est arrivé?";
-    header2 = 'Oui';
-    header3 = 'Non';
-  }
-
-  return {
-    language,
-    header1,
-    header2,
-    header3
-  };
-};
-
-export default connect(mapStateToProps)(Where1);
+export default ReportTo;

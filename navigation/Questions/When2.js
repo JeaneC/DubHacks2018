@@ -97,7 +97,7 @@ class Where1 extends Component {
             display: 'flex'
           }}
         >
-          <Text style={styles.header}>Can you provide any details?</Text>
+          <Text style={styles.header}>{this.props.header1}</Text>
 
           <View
             style={{
@@ -134,7 +134,9 @@ class Where1 extends Component {
               marginTop: 50
             }}
             onPress={async () => {
-              await this.props.updateWhen(this.state.value);
+              console.log('pressed');
+              this.props.updateWhen(this.state.value);
+              console.log('Waiting');
               this.props.navigation.navigate('Where1');
             }}
           >
@@ -146,6 +148,26 @@ class Where1 extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  const { language } = state.main;
+  let header1 = 'Do you remember when this happened?';
+
+  if (language == 1) {
+    console.log('English');
+  } else if (language == 2) {
+    console.log('Speaking Spanish');
+    header1 = '¿Recuerdas cuando sucedió esto?';
+  } else if (language == 3) {
+    console.log('Speaking French');
+    header1 = "Vous souvenez-vous quand c'est arrivé?";
+  }
+
+  return {
+    language,
+    header1
+  };
+};
+
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     updateWhen: val => {
@@ -155,6 +177,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Where1);

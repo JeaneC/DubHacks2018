@@ -98,9 +98,7 @@ class Where1 extends Component {
             display: 'flex'
           }}
         >
-          <Text style={styles.header}>
-            Can you describe where it happened?{' '}
-          </Text>
+          <Text style={styles.header}>{this.props.header1}</Text>
 
           <View
             style={{
@@ -150,6 +148,25 @@ class Where1 extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  const { language } = state.main;
+  let header1 = 'Do you remember when this happened?';
+  if (language == 1) {
+    console.log('Speaking English');
+  } else if (language == 2) {
+    console.log('Speaking Spanish');
+    header1 = '¿Puedes describir donde sucedió?';
+  } else if (language == 3) {
+    console.log('Speaking French');
+    header1 = "Pouvez-vous décrire où c'est arrivé?";
+  }
+
+  return {
+    language,
+    header1
+  };
+};
+
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     updateWhere: val => {
@@ -159,6 +176,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Where1);

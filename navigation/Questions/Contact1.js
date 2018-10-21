@@ -13,6 +13,8 @@ import { LinearGradient } from 'expo';
 import ActionItem from '../../components/ActionItem';
 import BotRight from '../../assets/BotRight.png';
 
+import { connect } from 'react-redux';
+
 const styles = {
   container: {
     flex: 1,
@@ -94,16 +96,14 @@ class Where1 extends Component {
             display: 'flex'
           }}
         >
-          <Text style={styles.header}>
-            Do you want to contact a counselor or hotline?
-          </Text>
+          <Text style={styles.header}>{this.props.header1}</Text>
 
           <ActionItem
-            note="Yes"
+            note={this.props.header2}
             move={() => this.props.navigation.navigate('Report1')}
           />
           <ActionItem
-            note="No"
+            note={this.props.header3}
             move={() => this.props.navigation.navigate('Report1')}
           />
         </ScrollView>
@@ -112,4 +112,32 @@ class Where1 extends Component {
   }
 }
 
-export default Where1;
+const mapStateToProps = state => {
+  const { language } = state.main;
+  let header1 = 'Do you want to contact a counselor or hotline?';
+  let header2 = 'Yes';
+  let header3 = 'No';
+
+  if (language == 1) {
+    console.log('¿Alguien más estaba presente?');
+  } else if (language == 2) {
+    console.log('Speaking Spanish');
+    header1 = '¿Quieres contactar a un consejero o línea directa?';
+    header2 = 'Si';
+    header3 = 'No';
+  } else if (language == 3) {
+    console.log('Speaking French');
+    header1 = "Voulez-vous contacter un conseiller ou une ligne d'assistance?";
+    header2 = 'Oui';
+    header3 = 'Non';
+  }
+
+  return {
+    language,
+    header1,
+    header2,
+    header3
+  };
+};
+
+export default connect(mapStateToProps)(Where1);

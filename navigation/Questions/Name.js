@@ -9,7 +9,7 @@ import GoNextIcon from '../../assets/GoNextIcon.png';
 import { createStackNavigator } from 'react-navigation';
 
 import { LinearGradient } from 'expo';
-import Airplane from '../../assets/Airplane.png';
+import Pencil from '../../assets/Pencil.png';
 
 import ActionItem from '../../components/ActionItem';
 import { connect } from 'react-redux';
@@ -95,7 +95,7 @@ class People1 extends Component {
             display: 'flex'
           }}
         >
-          <Text style={styles.header}>Would you like to name your entry</Text>
+          <Text style={styles.header}>{this.props.header1}</Text>
 
           <View
             style={{
@@ -128,14 +128,13 @@ class People1 extends Component {
           <TouchableOpacity
             style={{
               alignSelf: 'center',
-              marginRight: 30,
               marginTop: 50
             }}
             onPress={() => {
               this.props.navigation.navigate('DubHome');
             }}
           >
-            <Image source={Airplane} />
+            <Image source={Pencil} />
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -144,11 +143,21 @@ class People1 extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
-  return {};
+  const { language } = state.main;
+  let header1 = 'Would you like to name your entry?';
+  if (language == 1) {
+    console.log('Do you remember when this happened?');
+  } else if (language == 2) {
+    console.log('Speaking Spanish');
+    header1 = '¿Te gustaría nombrar tu entrada?';
+  } else if (language == 3) {
+    console.log('Speaking French');
+    header1 = 'Voulez-vous nommer votre entrée?';
+  }
+  return {
+    language,
+    header1
+  };
 };
 
-export default connect(
-  mapStateToProps,
-  null
-)(People1);
+export default connect(mapStateToProps)(People1);

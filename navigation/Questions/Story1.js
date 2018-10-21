@@ -91,9 +91,7 @@ class Story1 extends Component {
             display: 'flex'
           }}
         >
-          <Text style={styles.header}>
-            Can you describe what happened to you?
-          </Text>
+          <Text style={styles.header}>{this.props.header1}</Text>
 
           <View
             style={{
@@ -142,7 +140,22 @@ class Story1 extends Component {
 }
 
 const mapStateToProps = state => {
-  return {};
+  const { language } = state.main;
+  let header1 = 'Can you describe what happened to you?';
+  if (language == 1) {
+    console.log('Do you remember when this happened?');
+  } else if (language == 2) {
+    console.log('Speaking Spanish');
+    header1 = '¿Puedes describir lo que te pasó?';
+  } else if (language == 3) {
+    console.log('Speaking French');
+    header1 = 'Pouvez-vous décrire ce qui vous est arrivé?';
+  }
+
+  return {
+    language,
+    header1
+  };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {

@@ -7,9 +7,11 @@ import Back from '../assets/homeIcons/Back.png';
 import PhoneHelp from '../assets/PhoneHelp.png';
 import OnlineHelp from '../assets/OnlineHelp.png';
 import FriendHelp from '../assets/FriendHelp.png';
+import ActionItem from '../components/ActionItem';
 
 import { createStackNavigator } from 'react-navigation';
 
+import { connect } from 'react-redux';
 import { LinearGradient } from 'expo';
 
 const styles = {
@@ -100,7 +102,7 @@ class NewReport extends Component {
             width: '100%'
           }}
         >
-          <Text style={styles.header}>Immediate Help</Text>
+          <Text style={styles.header}>{this.props.header1}</Text>
 
           <View style={styles.paragraph} />
 
@@ -128,13 +130,45 @@ class NewReport extends Component {
             </TouchableOpacity>
             <Text style={styles.imageText}>{'Contact A Friend'}</Text>
           </View>
-          <Text style={[styles.header, { marginTop: 20 }]}>
-            Report Past Entries
+          <Text style={[styles.header, { marginTop: 20, marginBottom: 20 }]}>
+            {this.props.header2}
           </Text>
+          <ActionItem
+            note="October 21, 2018"
+            move={() => this.props.navigation.navigate('ReportTo')}
+          />
+          <ActionItem
+            note="September 27, 2018"
+            move={() => this.props.navigation.navigate('ReportTo')}
+          />
         </ScrollView>
       </View>
     );
   }
 }
 
-export default NewReport;
+const mapStateToProps = state => {
+  const { language } = state.main;
+  let header1 = 'Immediate Help';
+  let header2 = 'Report Past Entries';
+
+  if (language == 1) {
+    console.log('Speaking English');
+  } else if (language == 2) {
+    console.log('Speaking Spanish');
+    header1 = 'Ayuda Inmediata';
+    header2 = 'Reportar Entradas Pasadas';
+  } else if (language == 3) {
+    console.log('Speaking French');
+    header1 = 'Aide Immédiate';
+    header2 = 'Signaler les entrées passées';
+  }
+
+  return {
+    language,
+    header1,
+    header2
+  };
+};
+
+export default connect(mapStateToProps)(NewReport);
