@@ -1,2 +1,16 @@
-node_modules/**/*
-.expo/**/*
+node_modules/
+.expo/
+
+# debugging files
+*.log
+
+# OS files
+.DS_Store
+
+# build folders
+build/
+dist/
+
+# ide settings
+.vscode/
+.idea/
